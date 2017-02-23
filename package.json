@@ -1,0 +1,13 @@
+{
+  "name": "wechat-csc-node",
+  "version": "1.0.0",
+  "description": "CSC客户服务中心",
+  "dependencies": {
+    "async": "*",
+    "mysql": "*",
+    "heapdump": "*",
+    "hotwork": "file:hotwork",
+    "memwatch-next": "*",
+    "superagent": "*"
+  }
+}
