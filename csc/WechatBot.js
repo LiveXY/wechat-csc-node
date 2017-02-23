@@ -1,6 +1,7 @@
 //微信机器人
 'use strict';
 
+const os = require('os');
 const async = require('async');
 
 const hot = require("./HotHelper");
@@ -176,8 +177,11 @@ bot.fetchUUID = (cb) => {
 	api.FetchUUID((err, text) => {
 		if (!err) {
 			config.uuid = text.split('"')[1];
-			log.info('打开扫描二维码登录微信：', config.QRCodeUrl.format(config.uuid));
-			tools.exec('open ' + config.QRCodeUrl.format(config.uuid));
+			log.info('在浏览器中打开网址并扫描二维码登录微信：', config.QRCodeUrl.format(config.uuid));
+			if (os.platform().indexOf('win') === 0)
+				tools.exec('start ' + config.QRCodeUrl.format(config.uuid));
+			else if (os.platform() === 'darwin')
+				tools.exec('open ' + config.QRCodeUrl.format(config.uuid));
 		}
 		cb(err);
 	});
