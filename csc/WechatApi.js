@@ -5,7 +5,7 @@ const url = require('url');
 const https = require('https');
 const superagent = require('superagent');
 
-const hot = require("./HotHelper");
+const hot = require('./HotHelper');
 const config = hot.getConfig;
 const tools = hot.getTools;
 const log = hot.getLog;
@@ -222,4 +222,4 @@ api.FetchUUID = (cb) => {
 		});
 };
 
-module.exports = { beans: [{ id: "WechatApi", func: WechatApi, scope: "singleton" }] };
+module.exports = { beans: [{ id: 'WechatApi', func: WechatApi, scope: 'singleton' }] };

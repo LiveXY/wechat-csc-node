@@ -12,4 +12,4 @@ c.SyncCheckUrl = 'https://webpush.weixin.qq.com/cgi-bin/mmwebwx-bin/synccheck?sk
 
 c.msgs = {};
 
-module.exports = { beans: [{ id: "Config", func: Config, scope: "singleton" }] };
+module.exports = { beans: [{ id: 'Config', func: Config, scope: 'singleton' }] };

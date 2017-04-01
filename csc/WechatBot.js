@@ -4,7 +4,7 @@
 const os = require('os');
 const async = require('async');
 
-const hot = require("./HotHelper");
+const hot = require('./HotHelper');
 const api = hot.getWechatApi;
 const config = hot.getConfig;
 const log = hot.getLog;
@@ -150,7 +150,7 @@ bot.checkLogin = (cb) => {
 		if (!err && text && text.indexOf('window.code=200;') >= 0 && text.indexOf('window.redirect_uri') >= 0) {
 			tools.stopWaitTimer();
 			config.redirectUrl = text.split('"')[1];
-			config.baseUrl = config.redirectUrl.substring(0, config.redirectUrl.lastIndexOf("/"));
+			config.baseUrl = config.redirectUrl.substring(0, config.redirectUrl.lastIndexOf('/'));
 			console.log('');log.info('微信登录成功！');
 			cb(null);
 		} else {
@@ -187,4 +187,4 @@ bot.fetchUUID = (cb) => {
 	});
 };
 
-module.exports = { beans: [{ id: "WechatBot", func: WechatBot, runupdate: 'init', scope: "singleton" }] };
+module.exports = { beans: [{ id: 'WechatBot', func: WechatBot, runupdate: 'init', scope: 'singleton' }] };

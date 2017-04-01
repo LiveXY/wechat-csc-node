@@ -25,4 +25,4 @@ log.error = function() {
 	console.error.apply(null, args);
 };
 
-module.exports = { beans: [{ id: "Log", func: Log, scope: "singleton" }] };
+module.exports = { beans: [{ id: 'Log', func: Log, scope: 'singleton' }] };

@@ -1,7 +1,7 @@
 //微信消息
 'use strict';
 
-const hot = require("./HotHelper");
+const hot = require('./HotHelper');
 const config = hot.getConfig;
 const log = hot.getLog;
 const tools = hot.getTools;
@@ -62,7 +62,7 @@ wxmsg.clearAutoReplyMsg = (from, to, msg) => {
 };
 //解消息
 wxmsg.putMsg = (sender, msg) => {
-	if (msg.FromUserName.startsWith("@@")) return; //过滤群消息；
+	if (msg.FromUserName.startsWith('@@')) return; //过滤群消息；
 	let to = tools.getUserByUserName(msg.ToUserName);
 	switch (msg.MsgType) {
 		case 1: wxmsg.putTextMsg(sender, to, msg); break; //文本消息
@@ -94,4 +94,4 @@ wxmsg.putOtherMsg = (from, to, msg) => {
 	//console.log(from, to, msg);
 };
 
-module.exports = { beans: [{ id: "WechatMsg", func: WechatMsg, scope: "singleton" }] };
+module.exports = { beans: [{ id: 'WechatMsg', func: WechatMsg, scope: 'singleton' }] };

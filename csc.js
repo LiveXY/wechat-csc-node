@@ -4,7 +4,7 @@
 const memwatch = require('memwatch-next');
 const heapdump = require('heapdump');
 
-const hot = require("./csc/HotHelper");
+const hot = require('./csc/HotHelper');
 const bot = hot.getWechatBot;
 const log = hot.getLog;
 
@@ -16,7 +16,7 @@ const leakwatch = () => {
 	});
 };
 
-hot.scan("./csc"); //csc目录自动热更新
+hot.scan('./csc'); //csc目录自动热更新
 bot.start(); //启动机器人
 
 setTimeout(leakwatch, 2000);

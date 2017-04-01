@@ -4,20 +4,20 @@
 const crypto = require('crypto');
 const cp = require('child_process');
 
-const hot = require("./HotHelper");
+const hot = require('./HotHelper');
 const config = hot.getConfig;
 
 //日期format C#结构 yyyy-MM-dd HH:mm:ss
-Date.prototype.format = function(fmt) {
-	let o = { "M+": this.getMonth() + 1, "d+": this.getDate(), "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, "H+": this.getHours(), "m+": this.getMinutes(), "s+": this.getSeconds(), "q+": Math.floor((this.getMonth() + 3) / 3), "S": this.getMilliseconds() };
-	let week = { "0": "\u65e5", "1": "\u4e00", "2": "\u4e8c", "3": "\u4e09", "4": "\u56db", "5": "\u4e94", "6": "\u516d" };
-	if (/(y+)/.test(fmt)) { fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length)); };
-	if (/(E+)/.test(fmt)) { fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "\u661f\u671f" : "\u5468") : "") + week[this.getDay() + ""]); };
-	for (let k in o) { if (new RegExp("(" + k + ")").test(fmt)) { fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length))); }; };
+Date.prototype.format = function (fmt) {
+	let o = { 'M+': this.getMonth() + 1, 'd+': this.getDate(), 'h+': this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, 'H+': this.getHours(), 'm+': this.getMinutes(), 's+': this.getSeconds(), 'q+': Math.floor((this.getMonth() + 3) / 3), 'S': this.getMilliseconds() };
+	let week = { '0': '\u65e5', '1': '\u4e00', '2': '\u4e8c', '3': '\u4e09', '4': '\u56db', '5': '\u4e94', '6': '\u516d' };
+	if (/(y+)/.test(fmt)) { fmt = fmt.replace(RegExp.$1, (this.getFullYear() + '').substr(4 - RegExp.$1.length)); };
+	if (/(E+)/.test(fmt)) { fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? '\u661f\u671f' : '\u5468') : '') + week[this.getDay() + '']); };
+	for (let k in o) { if (new RegExp('(' + k + ')').test(fmt)) { fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length))); }; };
 	return fmt;
 };
-//字符format C#结构 "{0} is cat".format("QQ");
-String.prototype.format = function(obj) {
+//字符format C#结构 '{0} is cat'.format('QQ');
+String.prototype.format = function (obj) {
 	let formatted = this;
 	if (arguments.length > 1 || (!tools.isObject(obj))) {
 		for (let i = 0; i < arguments.length; i++) {
@@ -33,9 +33,9 @@ String.prototype.format = function(obj) {
 	return formatted;
 };
 //去前后空格
-String.prototype.trim = function() {
+String.prototype.trim = function () {
 	let str = this, whitespace = ' \n\r\t\f\x0b\xa0\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200a\u200b\u2028\u2029\u3000';
-	for (var i = 0,len = str.length; i < len; i++) {
+	for (let i = 0,len = str.length; i < len; i++) {
 		if (whitespace.indexOf(str.charAt(i)) === -1) {
 			str = str.substring(i);
 			break;
@@ -56,7 +56,7 @@ const tools = Tools.prototype;
 //MD5加密
 tools.MD5 = (str) => {
 	const md5sum = crypto.createHash('md5');
-	md5sum.update(str, "utf8");
+	md5sum.update(str, 'utf8');
 	str = md5sum.digest('hex');
 	return str;
 };
@@ -77,11 +77,11 @@ tools.isNumber = (x) => {
 	return /^[-+]?(?:\d+(?:\.\d*)?|\.\d+)(e[-+]?\d+)?$/.test(x);
 };
 //扩展方法
-tools.extend = () => {
+tools.extend = function () {
 	let target = arguments[0] || {}, i = 1, length = arguments.length, deep = false, options, name, src, copy;
 
-	if (typeof target === "boolean") { deep = target; target = arguments[1] || {}; i = 2; }
-	if (typeof target !== "object" && typeof target !== 'function') target = {};
+	if (typeof target === 'boolean') { deep = target; target = arguments[1] || {}; i = 2; }
+	if (typeof target !== 'object' && typeof target !== 'function') target = {};
 	if (length === i) { target = this; --i; }
 
 	for (; i < length; i++) {
@@ -139,7 +139,7 @@ tools.getUserByUserName = (userName) => {
 };
 //启动计时器
 tools.startWaitTimer = () => {
-	if (!config.waiting) config.waitTimer = setInterval(() => { process.stdout.write("."); }, 1000);
+	if (!config.waiting) config.waitTimer = setInterval(() => { process.stdout.write('.'); }, 1000);
 	config.waiting = true;
 };
 //停止计时器
@@ -160,4 +160,4 @@ tools.resetSyncKey = (syncKey) => {
 	config.flatSyncKey = config.flatSyncKey.substring(0, config.flatSyncKey.length - 3);
 };
 
-module.exports = { beans: [{ id: "Tools", func: Tools, scope: "singleton" }] };
+module.exports = { beans: [{ id: 'Tools', func: Tools, scope: 'singleton' }] };

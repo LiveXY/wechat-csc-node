@@ -38,23 +38,23 @@ const scanCallBack = (folderres, scan) => {
 		if (util.isFunction(res)) {
 			const bean = { func: res };
 			const tmpobj = new res();
-			if (tmpobj.hasOwnProperty("$id")) bean.id = tmpobj['$id'];
+			if (tmpobj.hasOwnProperty('$id')) bean.id = tmpobj['$id'];
 			if (!bean.id) bean.id = file;
 
 			if ((!!beans[bean.id]) && scan != true) {
 				if (beans[bean.id] != file && res.beans.length == 1) {
-					throw new Error("重复的文件:" + file + ", id:" + beans[bean.id]);
+					throw new Error('重复的文件:' + file + ', id:' + beans[bean.id]);
 					return;
 				}
 			} else {
 				beans[bean.id] = file;
 			}
-			const singleton = (tmpobj.hasOwnProperty("$scope") && tmpobj['$scope'] == "singleton");
+			const singleton = (tmpobj.hasOwnProperty('$scope') && tmpobj['$scope'] == 'singleton');
 
 			if (!!hotmap[bean.id]) {
 				if (scan) return;
 				if (singleton != (!!hotmap[bean.id].singleton)) {
-					throw new Error("单例文件已经改变:" + file + ", id:" + bean.id);
+					throw new Error('单例文件已经改变:' + file + ', id:' + bean.id);
 					return;
 				}
 				let protos = null, orgprotos = {};
@@ -70,33 +70,33 @@ const scanCallBack = (folderres, scan) => {
 				protos = bean.func.prototype;
 				try {
 					if (!!protos) for (let func_name in protos) orgprotos[func_name] = protos[func_name];
-					console.log("文件:", file, "id:", bean.id, "热更成功!");
+					console.log('文件:', file, 'id:', bean.id, '热更成功!');
 				} catch (e) {
-					console.error("文件:", file, "id:", bean.id, "热更失败!");
+					console.error('文件:', file, 'id:', bean.id, '热更失败!');
 					console.error(e);
 				}
 			} else {
 				hotmap[bean.id] = { id: bean.id, func: bean.func };
 				if (singleton) hotmap[bean.id].singleton = tmpobj;
 			}
-		} else if (res.hasOwnProperty("beans")) {
+		} else if (res.hasOwnProperty('beans')) {
 			for (let i = 0; i < res.beans.length; i++) {
 				const bean = res.beans[i];
-				if (!bean.id) { throw new Error("文件:" + file + ",没有id!"); return; }
-				if (!bean.func) { throw new Error("文件:" + file + ",没有func!"); return; }
+				if (!bean.id) { throw new Error('文件:' + file + ',没有id!'); return; }
+				if (!bean.func) { throw new Error('文件:' + file + ',没有func!'); return; }
 				if ((!!beans[bean.id]) && scan != true) {
 					if (beans[bean.id] != file && res.beans.length == 1) {
-						throw new Error("重复的文件:" + file + ", id:" + beans[bean.id]);
+						throw new Error('重复的文件:' + file + ', id:' + beans[bean.id]);
 						return;
 					}
 				} else {
 					beans[bean.id] = file;
 				}
-				const singleton = (bean.hasOwnProperty("scope") && (bean.scope == "singleton"));
+				const singleton = (bean.hasOwnProperty('scope') && (bean.scope == 'singleton'));
 				if (!!hotmap[bean.id]) {
 					if (scan) return;
 					if (singleton != (!!hotmap[bean.id].singleton)) {
-						throw new Error("单例文件已经改变:" + file + ", id:" + bean.id);
+						throw new Error('单例文件已经改变:' + file + ', id:' + bean.id);
 						return;
 					}
 					let protos = null, orgprotos = {};
@@ -112,12 +112,12 @@ const scanCallBack = (folderres, scan) => {
 					protos = bean.func.prototype;
 					try {
 						if (!!protos) for (let func_name in protos) orgprotos[func_name] = protos[func_name];
-						console.log("文件:", file, "id:", bean.id, "热更成功!");
+						console.log('文件:', file, 'id:', bean.id, '热更成功!');
 					} catch (e) {
-						console.error("文件:", file, "id:", bean.id, "热更失败!");
+						console.error('文件:', file, 'id:', bean.id, '热更失败!');
 						console.error(e);
 					}
-					if (singleton && bean.hasOwnProperty("runupdate")) hotmap[bean.id].singleton[bean.runupdate]();
+					if (singleton && bean.hasOwnProperty('runupdate')) hotmap[bean.id].singleton[bean.runupdate]();
 				} else {
 					hotmap[bean.id] = { id: bean.id, func: bean.func };
 					if (singleton) hotmap[bean.id].singleton = new bean.func();
@@ -138,7 +138,7 @@ const scanCallBack = (folderres, scan) => {
 					}
 					return;
 				}
-				if (!hotmap[file].singleton) throw new Error("热更文件没有数据:" + file);
+				if (!hotmap[file].singleton) throw new Error('热更文件没有数据:' + file);
 				extend(true, hotmap[file].singleton, res);
 			} else {
 				hotmap[file] = { id: file, singleton: res };
@@ -151,13 +151,13 @@ const scanFolder = (path) => { watcher.watch(path, scanCallBack, true); };
 const getHot = (id, require, file) => {
 	if (!hotmap.hasOwnProperty(id)) {
 		if (!file) file = id;
-		if (!require) throw new Error("没有热更文件：" + id);
+		if (!require) throw new Error('没有热更文件：' + id);
 
 		const res = {};
 		res[file] = require;
 		scanCallBack(res, true);
 	}
-	if (!hotmap.hasOwnProperty(id)) throw new Error("没有热更文件：" + id);
+	if (!hotmap.hasOwnProperty(id)) throw new Error('没有热更文件：' + id);
 
 	const hot = hotmap[id];
 	if (!!hot.singleton) return hot.singleton;

@@ -6,13 +6,13 @@ const path = require('path');
 const dirs = {};
 
 const watch = (path, cb, scan) => {
-	if (path.indexOf(".svn") > 0 || path.indexOf(".git") > 0) return;
+	if (path.indexOf('.svn') > 0 || path.indexOf('.git') > 0) return;
 	if (path.charAt(path.length - 1) !== '/') path += '/';
 	if (!!dirs[path]) return;
 	dirs[path] = true;
 	if (!!path) {
 		fs.watch(path, (event, name) => {
-			if ((event === 'change' || event === "rename") && name.split(".").pop() == "js")
+			if ((event === 'change' || event === 'rename') && name.split('.').pop() == 'js')
 				cb(load(path, name, false, cb));
 		});
 	}
@@ -32,7 +32,7 @@ const load = (mpath, filename, scan, cb) => {
 	return loadPath(mpath, filename, scan, cb);
 };
 const loadPath = (path, filename, scan, cb) => {
-	if (path.indexOf(".svn") > 0 || path.indexOf(".git") > 0) return;
+	if (path.indexOf('.svn') > 0 || path.indexOf('.git') > 0) return;
 	const files = fs.readdirSync(path);
 	if (files.length === 0) return console.warn('路径为空，路径:', path);
 	if (path.charAt(path.length - 1) !== '/') path += '/';

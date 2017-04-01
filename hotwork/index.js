@@ -1,5 +1,5 @@
 'use strict';
 
-var hot = require("./hot");
+const hot = require('./hot');
 exports.scan = hot.scanFolder;
 exports.get = hot.getHot;

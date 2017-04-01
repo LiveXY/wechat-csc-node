@@ -1,7 +1,7 @@
 //消息规则
 'use strict';
 
-const hot = require("./HotHelper");
+const hot = require('./HotHelper');
 const tools = hot.getTools;
 
 function MessageRole() { }
@@ -18,4 +18,4 @@ role.all = [
 	t => { if (/^(你好|在吗|在)$/i.test(t)) return role.welcomeMsg; }
 ];
 
-module.exports = { beans: [{ id: "MessageRole", func: MessageRole, scope: "singleton" }] };
+module.exports = { beans: [{ id: 'MessageRole', func: MessageRole, scope: 'singleton' }] };
